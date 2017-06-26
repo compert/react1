@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World</title>
+  <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+<body>
+<div id="content"></div>
+<script type="text/babel">
+const Card = (props) => {
+	return (
+  	<div style={{margin: '1em'}}>
+      <img width="75" src={props.avatar_url} />
+      <div style={{display: 'inline-block', marginLeft: 10}}>
+        <div style={{fontSize: '1.25em', fontWeight: 'bold'}}>
+          {props.name}
+        </div>
+        <div>{props.company}</div>
+      </div>
+    </div>
+  );
+}
+
+let data = [
+	{ name: "Paul O’Shannessy",
+    avatar_url: "https://avatars2.githubusercontent.com/u/8445?v=3",
+    company: "Facebook" },
+	{ name: "Ben Alpert",
+    avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=3",
+    company: "Facebook" },
+];
+
+const CardList = (props) => {
+	return (
+  	<div>
+      {props.cards.map(card => <Card {...card} />)}
+    </div>
+  );
+}
+
+class Form extends React.Component {
+	handleSubmit = (event) => {
+  	event.preventDefault();
+    console.log('Event: Form Submit', this.userNameInput.value);
+  }
+	render() {
+  	return (
+    	<form onSubmit={this.handleSubmit}>
+        <input type="text"
+          ref={(input) => this.userNameInput = input}
+          placeholder="Github username" />
+        <button type="submit">Add card</button>
+      </form>
+    );
+  }
+}
+
+class App extends React.Component {
+	render() {
+  	return (
+    	<div>
+        <Form />
+        <CardList cards={data} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+	<App />,
+	document.getElementById('content')
+);
+</script>
+</body>
+</html>
